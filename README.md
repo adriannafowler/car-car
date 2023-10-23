@@ -2,7 +2,7 @@
 
 Team:
 
-* Person 1 - Which microservice?
+Adrianna Fowler - Service microservice
 * Person 2 - Which microservice?
 
 ## Design
