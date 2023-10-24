@@ -3,7 +3,7 @@
 Team:
 
 Adrianna Fowler - Service microservice
-* Person 2 - Which microservice?
+* Tayloer Pearce - Sales microservice
 
 ## Design
 
