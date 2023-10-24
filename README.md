@@ -2,7 +2,7 @@
 
 Team:
 
-* Person 1 - Which microservice?
+Adrianna Fowler - Service microservice
 * Tayloer Pearce - Sales microservice
 
 ## Design
@@ -11,6 +11,8 @@ Team:
 
 Explain your models and integration with the inventory
 microservice, here.
+
+Extras:
 
 ## Sales microservice
 
