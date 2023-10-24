@@ -80,16 +80,85 @@ def appointment_detail(request, id):
                 {"message": "Invalid status"},
                 status = 400,
             )
+        if "technician" in content:
+            try:
+                technician = Technician.objects.get(id=content["technician"])
+                content["technician"] = technician
+            except Technician.DoesNotExist:
+                return JsonResponse(
+                    {"message": "Invalid technician id"},
+                    status = 400,
+                )
+        else:
+            pass
         try:
-            technician = Technician.objects.get(id=content["technician"])
-            content["technician"] = technician
-        except Technician.DoesNotExist:
+            appointment = Appointment.objects.filter(id=id).update(**content)
+            appointment = Appointment.objects.get(id=id)
             return JsonResponse(
-                {"message": "Invalid technician id"},
+                appointment,
+                encoder=AppointmentDetailEncoder,
+                safe=False
+            )
+        except Appointment.DoesNotExist:
+            return JsonResponse(
+                {"message": "Invalid appointment id"},
+                status = 400
+            )
+
+
+@require_http_methods(["PUT"])
+def cancel_appt(request, id):
+        content = json.loads(request.body)
+        if "technician" not in content:
+            pass
+        if "status" not in content:
+            pass
+        try:
+            status_value = content.get("status", "CANCELED")
+            status, created = Status.objects.get_or_create(status=status_value)
+            content["status"] = status
+        except Status.DoesNotExist:
+            return JsonResponse(
+                {"message": "Invalid status"},
                 status = 400,
             )
         try:
-            appointment = Appointment.objects.filter(id=id).update(**content)
+            appointment = Appointment.objects.filter(id=id).update(
+                status = status
+            )
+            appointment = Appointment.objects.get(id=id)
+            return JsonResponse(
+                appointment,
+                encoder=AppointmentDetailEncoder,
+                safe=False
+            )
+        except Appointment.DoesNotExist:
+            return JsonResponse(
+                {"message": "Invalid appointment id"},
+                status = 400
+            )
+
+
+@require_http_methods(["PUT"])
+def finish_appt(request, id):
+        content = json.loads(request.body)
+        if "technician" not in content:
+            pass
+        if "status" not in content:
+            pass
+        try:
+            status_value = content.get("status", "FINISHED")
+            status, created = Status.objects.get_or_create(status=status_value)
+            content["status"] = status
+        except Status.DoesNotExist:
+            return JsonResponse(
+                {"message": "Invalid status"},
+                status = 400,
+            )
+        try:
+            appointment = Appointment.objects.filter(id=id).update(
+                status = status
+            )
             appointment = Appointment.objects.get(id=id)
             return JsonResponse(
                 appointment,
