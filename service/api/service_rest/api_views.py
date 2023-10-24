@@ -69,9 +69,9 @@ def appointment_detail(request, id):
             )
     elif request.method == "DELETE":
         try:
-            count, _ = Appointment.objects.filter(id=id).delete()
+            count, _ = Appointment.objects.get(id=id).delete()
             if count > 0:
-                return JsonResponse({"deleted": "True"})
+                return JsonResponse({"deleted": count > 0})
         except Appointment.DoesNotExist:
             return JsonResponse(
                 {"message": "Invalid appointment id"},
@@ -115,10 +115,8 @@ def appointment_detail(request, id):
 
 @require_http_methods(["PUT"])
 def appointment_cancel(request, id):
-        content = json.loads(request.body)
+        content = json.loads(request.body) if request.body else {}
         if "technician" not in content:
-            pass
-        if "status" not in content:
             pass
         try:
             status_value = content.get("status", "canceled")
@@ -130,9 +128,7 @@ def appointment_cancel(request, id):
                 status = 400,
             )
         try:
-            appointment = Appointment.objects.filter(id=id).update(
-                status = status
-            )
+            Appointment.objects.filter(id=id).update(**content)
             appointment = Appointment.objects.get(id=id)
             return JsonResponse(
                 appointment,
@@ -148,10 +144,8 @@ def appointment_cancel(request, id):
 
 @require_http_methods(["PUT"])
 def appointment_finish(request, id):
-        content = json.loads(request.body)
+        content = json.loads(request.body) if request.body else {}
         if "technician" not in content:
-            pass
-        if "status" not in content:
             pass
         try:
             status_value = content.get("status", "finished")
@@ -163,9 +157,7 @@ def appointment_finish(request, id):
                 status = 400,
             )
         try:
-            appointment = Appointment.objects.filter(id=id).update(
-                status = status
-            )
+            Appointment.objects.filter(id=id).update(**content)
             appointment = Appointment.objects.get(id=id)
             return JsonResponse(
                 appointment,
@@ -219,9 +211,9 @@ def technician_detail(request, id):
             )
     else:
         try:
-            count, _ = Technician.objects.filter(id=id).delete()
+            count, _ = Technician.objects.get(id=id).delete()
             if count > 0:
-                return JsonResponse({"deleted": "True"})
+                return JsonResponse({"deleted": count > 0})
         except Technician.DoesNotExist:
             return JsonResponse(
                 {"message": "Invalid technician id"},

@@ -46,8 +46,10 @@ class AppointmentListEncoder(ModelEncoder):
     ]
 
     def get_extra_data(self, o):
-        return {"status": o.status.status,
-                "technician": f"{o.technician.first_name} {o.technician.last_name}"}
+        status = o.status.status if o.status else None
+        technician = f"{o.technician.first_name} {o.technician.last_name}"
+        return {"status": status,
+                "technician": technician}
 
 
 class AppointmentDetailEncoder(ModelEncoder):
@@ -61,5 +63,7 @@ class AppointmentDetailEncoder(ModelEncoder):
     ]
 
     def get_extra_data(self, o):
-        return {"status": o.status.status,
-                "technician": f"{o.technician.first_name} {o.technician.last_name}"}
+        status = o.status.status if o.status else None
+        technician = f"{o.technician.first_name} {o.technician.last_name}"
+        return {"status": status,
+                "technician": technician}
