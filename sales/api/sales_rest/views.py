@@ -21,6 +21,7 @@ def api_list_salespeople(request):
         return JsonResponse(
             salesperson,
             encoder=SalespersonEncoder,
+            safe=False,
         )
 
 
@@ -38,6 +39,7 @@ def api_list_customers(request):
         return JsonResponse(
             customer,
             encoder=CustomerEncoder,
+            safe=False,
         )
 
 
@@ -51,8 +53,39 @@ def api_list_sales(request):
         )
     else:
         content = json.loads(request.body)
+        try:
+            if "automobile" in content:
+                automobile = AutomobileVO.objects.get(vin=content["automobile"])
+                content["automobile"] = automobile
+        except AutomobileVO.DoesNotExist:
+            return JsonResponse(
+                {"message": "Invalid automobile vin number"},
+                status=400
+            )
+
+        try:
+            if "salesperson" in content:
+                salesperson = Salesperson.objects.get(employee_id=content["salesperson"])
+                content["salesperson"] = salesperson
+        except Salesperson.DoesNotExist:
+            return JsonResponse(
+                {"message": "Invalid employee ID number"},
+                status=400
+            )
+
+        try:
+            if "customer" in content:
+                customer = Customer.objects.get(id=content["customer"])
+                content["customer"] = customer
+        except Salesperson.DoesNotExist:
+            return JsonResponse(
+                {"message": "Invalid customer ID number"},
+                status=400
+            )
+
         sale = Sale.objects.create(**content)
         return JsonResponse(
             sale,
             encoder=SaleEncoder,
+            safe=False
         )
