@@ -22,10 +22,34 @@ def list_appointments(request):
             )
     else:
         content = json.loads(request.body)
-        appointment = Appointment.objects.create(**content)
+        try:
+            technician = Technician.objects.get(id=content["technician"])
+            content["technician"] = technician
+        except Technician.DoesNotExist:
+            return JsonResponse(
+                {"message": "Invalid technician id"},
+                status = 400,
+            )
+        try:
+            status_value = content.get("status", "SCHEDULED")
+            status, created = Status.objects.get_or_create(status=status_value)
+        except Status.DoesNotExist:
+            return JsonResponse(
+                {"message": "Invalid status"},
+                status = 400,
+            )
+        appointment = Appointment.objects.create(
+            date_time = content["date_time"],
+            reason = content["reason"],
+            vin = content["vin"],
+            customer = content["customer"],
+            status = status,
+            technician = technician
+        )
         return JsonResponse(
             appointment,
-            encoder=AppointmentListEncoder,
+            encoder=AppointmentDetailEncoder,
+            safe=False,
         )
 
 
@@ -49,14 +73,54 @@ def appointment_detail(request, id):
     else:
         content = json.loads(request.body)
         try:
-            Appointment.objects.update(**content)
+            status = Status.objects.get(id=content["status"])
+            content["status"] = status
+        except Status.DoesNotExist:
+            return JsonResponse(
+                {"message": "Invalid status"},
+                status = 400,
+            )
+        try:
+            technician = Technician.objects.get(id=content["technician"])
+            content["technician"] = technician
+        except Technician.DoesNotExist:
+            return JsonResponse(
+                {"message": "Invalid technician id"},
+                status = 400,
+            )
+        try:
+            appointment = Appointment.objects.filter(id=id).update(**content)
             appointment = Appointment.objects.get(id=id)
             return JsonResponse(
                 appointment,
                 encoder=AppointmentDetailEncoder,
+                safe=False
             )
         except Appointment.DoesNotExist:
             return JsonResponse(
                 {"message": "Invalid appointment id"},
                 status = 400
             )
+
+
+@require_http_methods(["GET", "POST"])
+def technician_list(request):
+    if request.method == "GET":
+        try:
+            technicians = Technician.objects.all()
+            return JsonResponse(
+                {"technicians": technicians},
+                encoder=TechnicianListEncoder
+            )
+        except Technician.DoesNotExist:
+            return JsonResponse(
+                {"message": "Failed to fetch technicians"},
+                status = 400
+            )
+    else:
+        content = json.loads(request.body)
+        technician = Technician.objects.create(**content)
+        return JsonResponse(
+            technician,
+            encoder=TechnicianListEncoder,
+        )

@@ -15,7 +15,7 @@ class AutomobileVO(models.Model):
 
 
 class Status(models.Model):
-    status = models.CharField(max_length=100)
+    status = models.CharField(max_length=100, default="SCHEDULED")
 
     def __str__(self):
         return self.status
@@ -30,7 +30,7 @@ class Appointment(models.Model):
         on_delete=models.SET_NULL,
         null=True
     )
-    vin = models.CharField(max_length=17, unique=True)
+    vin = models.CharField(max_length=17)
     customer = models.CharField(max_length=200)
     technician = models.ForeignKey(
         Technician,
