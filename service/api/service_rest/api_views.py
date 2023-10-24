@@ -123,4 +123,24 @@ def technician_list(request):
         return JsonResponse(
             technician,
             encoder=TechnicianListEncoder,
+            safe=False
         )
+
+
+@require_http_methods(["GET", "DELETE"])
+def technician_detail(request, id):
+    if request.method == "GET":
+        try:
+            technician = Technician.objects.get(id=id)
+            return JsonResponse(
+                {"technician": technician},
+                encoder=TechnicianDetailEncoder
+            )
+        except Technician.DoesNotExist:
+            return JsonResponse(
+                {"message": "Invalid technician id"},
+                status = 400
+            )
+    else:
+        count, _ = Technician.objects.filter(id=id).delete()
+        return JsonResponse({"deleted": count > 0})
