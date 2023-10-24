@@ -40,6 +40,7 @@ class AppointmentListEncoder(ModelEncoder):
     model = Appointment
     properties = [
         "date_time",
+        "customer",
         "reason",
         "id",
     ]
@@ -53,6 +54,7 @@ class AppointmentDetailEncoder(ModelEncoder):
     model = Appointment
     properties = [
         "date_time",
+        "customer",
         "reason",
         "vin",
         "customer",
