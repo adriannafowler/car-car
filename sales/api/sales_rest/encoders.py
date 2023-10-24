@@ -16,6 +16,7 @@ class SalespersonEncoder(ModelEncoder):
         "first_name",
         "last_name",
         "employee_id",
+        "id",
     ]
 
 
@@ -37,6 +38,7 @@ class SaleEncoder(ModelEncoder):
         "automobile",
         "salesperson",
         "customer",
+        "id",
     ]
     encoders = {"automobile": AutomobileVOEncoder(),
                 "salesperson": SalespersonEncoder(),

@@ -1,3 +1,4 @@
+from re import T
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
@@ -25,6 +26,34 @@ def api_list_salespeople(request):
         )
 
 
+@require_http_methods(["GET", "DELETE"])
+def api_show_salesperson(request, pk):
+    try:
+        if request.method == "GET":
+            salesperson = Salesperson.objects.get(id=pk)
+            return JsonResponse(
+                salesperson,
+                encoder=SalespersonEncoder,
+                safe=False,
+            )
+    except Salesperson.DoesNotExist:
+        return JsonResponse(
+                {"message": "Salesperson id does not exist"},
+                status=404
+            )
+    else:
+        try:
+            salesperson = Salesperson.objects.get(id=pk)
+            count, _ = salesperson.delete()
+            return JsonResponse({"Deleted": count > 0})
+
+        except Salesperson.DoesNotExist:
+            return JsonResponse(
+                {"message": "Salesperson id does not exist"},
+                status=400
+            )
+
+
 @require_http_methods(["GET", "POST"])
 def api_list_customers(request):
     if request.method == "GET":
@@ -41,6 +70,37 @@ def api_list_customers(request):
             encoder=CustomerEncoder,
             safe=False,
         )
+
+
+@require_http_methods(["GET", "DELETE"])
+def api_show_customer(request, pk):
+    try:
+        if request.method == "GET":
+            customer = Customer.objects.get(id=pk)
+            return JsonResponse(
+                customer,
+                encoder=CustomerEncoder,
+                safe=False,
+            )
+    except Customer.DoesNotExist:
+        return JsonResponse(
+                {"message": "Customer id does not exist"},
+                status=404
+            )
+    else:
+        try:
+            customer = Customer.objects.get(id=pk)
+            count, _ = customer.delete()
+            return JsonResponse({"Deleted": count > 0})
+
+        except Customer.DoesNotExist:
+            return JsonResponse(
+                {"message": "Customer id does not exist"},
+                status=400
+            )
+
+
+
 
 
 @require_http_methods(["GET", "POST"])
@@ -89,3 +149,33 @@ def api_list_sales(request):
             encoder=SaleEncoder,
             safe=False
         )
+
+
+@require_http_methods(["GET", "DELETE"])
+def api_show_sale(request, pk):
+    if request.method == "GET":
+        try:
+            sale = Sale.objects.get(id=pk)
+            return JsonResponse(
+                sale,
+                encoder=SaleEncoder,
+                safe=False,
+
+            )
+        except Sale.DoesNotExist:
+            return JsonResponse(
+                {"message": "Sale id does not exist"},
+                status=404
+            )
+
+    else:
+        try:
+            sale = Sale.objects.get(id=pk)
+            count, _ = sale.delete()
+            return JsonResponse({"Deleted": count > 0})
+
+        except Sale.DoesNotExist:
+            return JsonResponse(
+                {"message": "Sale id does not exist"},
+                status=400
+            )
