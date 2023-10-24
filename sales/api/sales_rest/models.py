@@ -40,14 +40,11 @@ class Sale(models.Model):
     salesperson = models.ForeignKey(
         Salesperson,
         related_name="sales",
-        on_delete=models.CASCADE,
+        on_delete=models.PROTECT,
     )
 
     customer = models.ForeignKey(
         Customer,
         related_name="sales",
-        on_delete=models.CASCADE,
+        on_delete=models.PROTECT,
     )
-
-    def __str__(self):
-        return self.automobile
