@@ -71,9 +71,7 @@ def appointment_detail(request, id):
         try:
             count, _ = Appointment.objects.filter(id=id).delete()
             if count > 0:
-                return JsonResponse({"deleted": count > 0}, status=200)
-            elif count == 0:
-                return JsonResponse({"deleted": count > 0}, status=404)
+                return JsonResponse({"deleted": "True"})
         except Appointment.DoesNotExist:
             return JsonResponse(
                 {"message": "Invalid appointment id"},
@@ -224,8 +222,6 @@ def technician_detail(request, id):
             count, _ = Technician.objects.filter(id=id).delete()
             if count > 0:
                 return JsonResponse({"deleted": "True"})
-            # elif count == 0:
-            #     return JsonResponse({"deleted": count > 0}, status=404)
         except Technician.DoesNotExist:
             return JsonResponse(
                 {"message": "Invalid technician id"},
