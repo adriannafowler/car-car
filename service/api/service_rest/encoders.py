@@ -34,6 +34,7 @@ class StatusEncoder(ModelEncoder):
     model = Status
     properties = [
         "status",
+        "id",
     ]
 
 
