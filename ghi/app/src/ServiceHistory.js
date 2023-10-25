@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react'
 import moment from 'moment'
-import moment from 'moment'
 
 
 function ServiceHistory() {
