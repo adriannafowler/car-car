@@ -96,7 +96,7 @@ def api_show_customer(request, pk):
         except Customer.DoesNotExist:
             return JsonResponse(
                 {"message": "Customer id does not exist"},
-                status=400
+                status=404
             )
 
 
@@ -137,7 +137,7 @@ def api_list_sales(request):
             if "customer" in content:
                 customer = Customer.objects.get(id=content["customer"])
                 content["customer"] = customer
-        except Salesperson.DoesNotExist:
+        except Customer.DoesNotExist:
             return JsonResponse(
                 {"message": "Invalid customer ID number"},
                 status=400
