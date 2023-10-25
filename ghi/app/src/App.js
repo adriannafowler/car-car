@@ -1,10 +1,12 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MainPage from './MainPage';
 import Nav from './Nav';
-import SalespeopleList from './SalespeopleList';
-import CustomerList from './CustomerList';
-import SalesList from './SalesList';
-import SalespersonForm from './SalespersonForm';
+import SalespeopleList from './components/SalespeopleList';
+import CustomerList from './components/CustomerList';
+import SalesList from './components/SalesList';
+import SalespersonForm from './components/SalespersonForm';
+import CustomerForm from './components/CustomerForm';
+import SaleForm from './components/SaleForm';
 
 function App() {
   return (
@@ -19,9 +21,11 @@ function App() {
           </Route>
           <Route path="customers">
             <Route index element={<CustomerList />} />
+            <Route path="create" element={<CustomerForm />} />
           </Route>
           <Route path="sales">
             <Route index element={<SalesList />} />
+            <Route path="create" element={<SaleForm />} />
           </Route>
         </Routes>
 

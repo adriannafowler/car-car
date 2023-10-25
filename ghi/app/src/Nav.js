@@ -1,5 +1,4 @@
 import { NavLink } from 'react-router-dom';
-import SalespeopleList from './SalespeopleList';
 
 function Nav() {
   return (
@@ -14,7 +13,9 @@ function Nav() {
             <NavLink className="navbar-brand" to="salespeople/" aria-current="page">Salespeople</NavLink>
             <NavLink className="navbar-brand" to="salespeople/create/" aria-current="page">Add a Salesperson</NavLink>
             <NavLink className="navbar-brand" to="customers/" aria-current="page">Customers</NavLink>
+            <NavLink className="navbar-brand" to="customers/create/" aria-current="page">Add a Customer</NavLink>
             <NavLink className="navbar-brand" to="sales/" aria-current="page">Sales</NavLink>
+            <NavLink className="navbar-brand" to="sales/create/" aria-current="page">Add a Sale</NavLink>
           </ul>
         </div>
       </div>
