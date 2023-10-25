@@ -13,6 +13,7 @@ Explain your models and integration with the inventory
 microservice, here.
 
 Extras:
+    - more update status functionality
 
 ## Sales microservice
 

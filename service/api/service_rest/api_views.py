@@ -7,7 +7,7 @@ import json
 
 
 @require_http_methods(["GET", "POST"])
-def list_appointments(request):
+def appointment_list(request):
     if request.method == "GET":
         try:
             appointments = Appointment.objects.all()
@@ -31,7 +31,7 @@ def list_appointments(request):
                 status = 400,
             )
         try:
-            status_value = content.get("status", "SCHEDULED")
+            status_value = content.get("status", "scheduled")
             status, created = Status.objects.get_or_create(status=status_value)
         except Status.DoesNotExist:
             return JsonResponse(
@@ -68,8 +68,15 @@ def appointment_detail(request, id):
                 status = 400
             )
     elif request.method == "DELETE":
-        count, _ = Appointment.objects.filter(id=id).delete()
-        return JsonResponse({"deleted": count > 0})
+        try:
+            count, _ = Appointment.objects.get(id=id).delete()
+            if count > 0:
+                return JsonResponse({"deleted": count > 0})
+        except Appointment.DoesNotExist:
+            return JsonResponse(
+                {"message": "Invalid appointment id"},
+                status=400
+            )
     else:
         content = json.loads(request.body)
         try:
@@ -107,14 +114,12 @@ def appointment_detail(request, id):
 
 
 @require_http_methods(["PUT"])
-def cancel_appt(request, id):
-        content = json.loads(request.body)
+def appointment_cancel(request, id):
+        content = json.loads(request.body) if request.body else {}
         if "technician" not in content:
             pass
-        if "status" not in content:
-            pass
         try:
-            status_value = content.get("status", "CANCELED")
+            status_value = content.get("status", "canceled")
             status, created = Status.objects.get_or_create(status=status_value)
             content["status"] = status
         except Status.DoesNotExist:
@@ -123,9 +128,7 @@ def cancel_appt(request, id):
                 status = 400,
             )
         try:
-            appointment = Appointment.objects.filter(id=id).update(
-                status = status
-            )
+            Appointment.objects.filter(id=id).update(**content)
             appointment = Appointment.objects.get(id=id)
             return JsonResponse(
                 appointment,
@@ -140,14 +143,12 @@ def cancel_appt(request, id):
 
 
 @require_http_methods(["PUT"])
-def finish_appt(request, id):
-        content = json.loads(request.body)
+def appointment_finish(request, id):
+        content = json.loads(request.body) if request.body else {}
         if "technician" not in content:
             pass
-        if "status" not in content:
-            pass
         try:
-            status_value = content.get("status", "FINISHED")
+            status_value = content.get("status", "finished")
             status, created = Status.objects.get_or_create(status=status_value)
             content["status"] = status
         except Status.DoesNotExist:
@@ -156,9 +157,7 @@ def finish_appt(request, id):
                 status = 400,
             )
         try:
-            appointment = Appointment.objects.filter(id=id).update(
-                status = status
-            )
+            Appointment.objects.filter(id=id).update(**content)
             appointment = Appointment.objects.get(id=id)
             return JsonResponse(
                 appointment,
@@ -208,8 +207,15 @@ def technician_detail(request, id):
         except Technician.DoesNotExist:
             return JsonResponse(
                 {"message": "Invalid technician id"},
-                status = 400
+                status = 404
             )
     else:
-        count, _ = Technician.objects.filter(id=id).delete()
-        return JsonResponse({"deleted": count > 0})
+        try:
+            count, _ = Technician.objects.get(id=id).delete()
+            if count > 0:
+                return JsonResponse({"deleted": count > 0})
+        except Technician.DoesNotExist:
+            return JsonResponse(
+                {"message": "Invalid technician id"},
+                status = 404
+            )

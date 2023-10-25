@@ -8,6 +8,7 @@ class TechnicianListEncoder(ModelEncoder):
     properties = [
         "first_name",
         "last_name",
+        "employee_id",
         "id",
     ]
 
@@ -40,24 +41,30 @@ class AppointmentListEncoder(ModelEncoder):
     model = Appointment
     properties = [
         "date_time",
+        "customer",
         "reason",
         "id",
     ]
 
     def get_extra_data(self, o):
-        return {"status": o.status.status,
-                "technician": f"{o.technician.first_name} {o.technician.last_name}"}
+        status = o.status.status if o.status else None
+        technician = f"{o.technician.first_name} {o.technician.last_name}"
+        return {"status": status,
+                "technician": technician}
 
 
 class AppointmentDetailEncoder(ModelEncoder):
     model = Appointment
     properties = [
         "date_time",
+        "customer",
         "reason",
         "vin",
         "customer",
     ]
 
     def get_extra_data(self, o):
-        return {"status": o.status.status,
-                "technician": f"{o.technician.first_name} {o.technician.last_name}"}
+        status = o.status.status if o.status else None
+        technician = f"{o.technician.first_name} {o.technician.last_name}"
+        return {"status": status,
+                "technician": technician}
