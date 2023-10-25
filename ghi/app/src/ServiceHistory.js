@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import moment from 'moment'
+import moment from 'moment'
 
 
 function ServiceHistory() {
@@ -54,6 +55,7 @@ function ServiceHistory() {
                         <th>VIN</th>
                         <th>Date</th>
                         <th>Time</th>
+                        <th>Time</th>
                         <th>Technician</th>
                         <th>Reason</th>
                         <th>Status</th>
@@ -72,6 +74,8 @@ function ServiceHistory() {
                                 <td>{appointment.customer}</td>
                                 <td>{vip}</td>
                                 <td>{appointment.vin}</td>
+                                <td>{date}</td>
+                                <td>{time}</td>
                                 <td>{date}</td>
                                 <td>{time}</td>
                                 <td>{appointment.technician}</td>
