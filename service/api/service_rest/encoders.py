@@ -8,6 +8,7 @@ class TechnicianListEncoder(ModelEncoder):
     properties = [
         "first_name",
         "last_name",
+        "employee_id",
         "id",
     ]
 
