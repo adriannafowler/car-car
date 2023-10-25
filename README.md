@@ -14,6 +14,7 @@ microservice, here.
 
 Extras:
     - more update status functionality
+    - used moment.js library to help format dates and times
 
 ## Sales microservice
 
