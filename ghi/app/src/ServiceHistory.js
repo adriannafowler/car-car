@@ -5,6 +5,8 @@ import moment from 'moment'
 function ServiceHistory() {
     const [autos, setAutos] = useState([])
     const [vipVins, setVipVins] = useState([])
+    const [appointments, setAppointments] = useState([])
+    const [q, setQ] = useState("")
 
     const fetchAutoData = async () => {
         const url = "http://localhost:8100/api/automobiles/"
@@ -28,8 +30,6 @@ function ServiceHistory() {
         setVipVins(vins)
     }, [autos])
 
-    const [appointments, setAppointments] = useState([])
-
     const fetchData = async () => {
         const url = "http://localhost:8080/api/appointments/"
         const response = await fetch(url)
@@ -42,10 +42,24 @@ function ServiceHistory() {
         fetchData()
     }, [vipVins])
 
+    const handleSearch = (e) => {
+        e.preventDefault()
+        if (q !== "") {
+            setAppointments(
+                appointments
+                .filter(appointment => appointment.vin === q))
+        }
+    }
 
     return (
         <>
             <h1>Service History</h1>
+            <div className='search-wrapper'>
+                <form onSubmit={handleSearch}>
+                    <input onChange={(e) => setQ(e.target.value)} value={q} type='search' name='search-form' id='search-form' className='search-input' placeholder='Search by VIN'/>
+                    <button type='submit'>Search</button>
+                </form>
+            </div>
             <table className='table table-striped'>
                 <thead>
                     <tr>
@@ -53,7 +67,6 @@ function ServiceHistory() {
                         <th>Is VIP?</th>
                         <th>VIN</th>
                         <th>Date</th>
-                        <th>Time</th>
                         <th>Time</th>
                         <th>Technician</th>
                         <th>Reason</th>
@@ -73,8 +86,6 @@ function ServiceHistory() {
                                 <td>{appointment.customer}</td>
                                 <td>{vip}</td>
                                 <td>{appointment.vin}</td>
-                                <td>{date}</td>
-                                <td>{time}</td>
                                 <td>{date}</td>
                                 <td>{time}</td>
                                 <td>{appointment.technician}</td>
