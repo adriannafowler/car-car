@@ -1,6 +1,5 @@
 from common.json import ModelEncoder
 from .models import Technician, AutomobileVO, Status, Appointment
-import json
 
 
 class TechnicianListEncoder(ModelEncoder):
@@ -52,8 +51,7 @@ class AppointmentListEncoder(ModelEncoder):
     def get_extra_data(self, o):
         status = o.status.status if o.status else None
         technician = f"{o.technician.first_name} {o.technician.last_name}"
-        return {"status": status,
-                "technician": technician}
+        return {"status": status, "technician": technician}
 
 
 class AppointmentDetailEncoder(ModelEncoder):
@@ -69,5 +67,4 @@ class AppointmentDetailEncoder(ModelEncoder):
     def get_extra_data(self, o):
         status = o.status.status if o.status else None
         technician = f"{o.technician.first_name} {o.technician.last_name}"
-        return {"status": status,
-                "technician": technician}
+        return {"status": status, "technician": technician}

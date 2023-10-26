@@ -1,32 +1,27 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import MainPage from './MainPage';
-import Nav from './Nav';
-import SalespeopleList from './sales_components/SalespeopleList';
-import CustomerList from './sales_components/CustomerList';
-import SalesList from './sales_components/SalesList';
-import SalespersonForm from './sales_components/SalespersonForm';
-import CustomerForm from './sales_components/CustomerForm';
-import SaleForm from './sales_components/SaleForm';
-import TechnicianForm from './TechnicianForm';
-import TechnicianList from './TechnicianList';
-import SalespersonHistoryList from './sales_components/SalespersonHistoryList';
-import ModelList from './inventory_components/ModelList';
-import ModelForm from './inventory_components/ModelForm';
-import ManufacturerForm from './inventory_components/ManufacturerForm';
-import SalespeopleList from './components/SalespeopleList';
-import CustomerList from './components/CustomerList';
-import SalesList from './components/SalesList';
-import SalespersonForm from './components/SalespersonForm';
-import CustomerForm from './components/CustomerForm';
-import SaleForm from './components/SaleForm';
-import TechnicianForm from './Service Components/TechnicianForm';
-import TechnicianList from './Service Components/TechnicianList';
-import ServiceAppointmentForm from './Service Components/ServiceAppointmentForm';
-import ServiceHistory from './Service Components/ServiceHistory';
-import ServiceAppointments from './Service Components/ServiceAppointments';
-import AutomobileList from './AutomobileList';
-import AutomobileForm from './AutomobileForm';
-import ManufacturerList from './ManufacturerList';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import MainPage from "./MainPage";
+import Nav from "./Nav";
+
+import SalespeopleList from "./sales_components/SalespeopleList";
+import CustomerList from "./sales_components/CustomerList";
+import SalesList from "./sales_components/SalesList";
+import SalespersonForm from "./sales_components/SalespersonForm";
+import CustomerForm from "./sales_components/CustomerForm";
+import SaleForm from "./sales_components/SaleForm";
+import SalespersonHistoryList from "./sales_components/SalespersonHistoryList";
+
+import TechnicianList from "./service_components/TechnicianList";
+import TechnicianForm from "./service_components/TechnicianForm";
+import ServiceAppointments from "./service_components/ServiceAppointments";
+import ServiceAppointmentForm from "./service_components/ServiceAppointmentForm";
+import ServiceHistory from "./service_components/ServiceHistory";
+
+import ModelList from "./inventory_components/ModelList";
+import ModelForm from "./inventory_components/ModelForm";
+import ManufacturerList from "./inventory_components/ManufacturerList";
+import ManufacturerForm from "./inventory_components/ManufacturerForm";
+import AutomobileList from "./inventory_components/AutomobileList";
+import AutomobileForm from "./inventory_components/AutomobileForm";
 
 function App() {
   return (
@@ -48,21 +43,27 @@ function App() {
             <Route path="create" element={<SaleForm />} />
             <Route path="history" element={<SalespersonHistoryList />} />
           </Route>
-          <Route path="/technicians" element={<TechnicianList />} />
-          <Route path="/technicians/create" element={<TechnicianForm />} />
+          <Route path="technicians">
+            <Route index element={<TechnicianList />} />
+            <Route path="create" element={<TechnicianForm />} />
+          </Route>
           <Route path="models">
             <Route index element={<ModelList />} />
             <Route path="create" element={<ModelForm />} />
           </Route>
           <Route path="manufacturers">
+            <Route index element={<ManufacturerList />} />
             <Route path="create" element={<ManufacturerForm />} />
           </Route>
-          <Route path="/appointments" element={<ServiceAppointments />} />
-          <Route path="/appointments/create" element={<ServiceAppointmentForm />} />
-          <Route path="/servicehistory" element={<ServiceHistory />} />
-          <Route path="/automobiles" element={<AutomobileList />} />
-          <Route path="/automobiles/create" element={<AutomobileForm />} />
-          <Route path="/manufacturers" element={<ManufacturerList />} />
+          <Route path="appointments">
+            <Route index element={<ServiceAppointments />} />
+            <Route path="create" element={<ServiceAppointmentForm />} />
+          </Route>
+          <Route path="automobiles">
+            <Route index element={<AutomobileList />} />
+            <Route path="create" element={<AutomobileForm />} />
+          </Route>
+          <Route path="servicehistory" element={<ServiceHistory />} />
         </Routes>
       </div>
     </BrowserRouter>

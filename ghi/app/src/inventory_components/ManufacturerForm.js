@@ -63,6 +63,6 @@ function ManufacturerForm() {
         </div>
         </div>
     );
-    }
+}
 
 export default ManufacturerForm;
