@@ -34,12 +34,15 @@ class StatusEncoder(ModelEncoder):
     model = Status
     properties = [
         "status",
+        "id",
     ]
 
 
 class AppointmentListEncoder(ModelEncoder):
     model = Appointment
     properties = [
+        "vin",
+        "technician",
         "date_time",
         "customer",
         "reason",

@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 from .models import Technician, AutomobileVO, Status, Appointment
-from .encoders import TechnicianListEncoder, TechnicianDetailEncoder, Status, AppointmentListEncoder, AppointmentDetailEncoder
+from .encoders import TechnicianListEncoder, TechnicianDetailEncoder, Status, AppointmentListEncoder, AppointmentDetailEncoder, StatusEncoder
 import json
 
 
@@ -219,3 +219,18 @@ def technician_detail(request, id):
                 {"message": "Invalid technician id"},
                 status = 404
             )
+
+
+@require_http_methods(["GET"])
+def statuses_list(request):
+    try:
+        statuses = Status.objects.all()
+        return JsonResponse(
+            {"statuses": statuses},
+            encoder=StatusEncoder
+        )
+    except Status.DoesNotExist:
+        return JsonResponse(
+            {"message": "Failed to fetch statuses"},
+            status=400
+        )
