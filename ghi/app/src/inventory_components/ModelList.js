@@ -43,6 +43,6 @@ function ModelList() {
         </table>
         </div>
     );
-    }
+}
 
 export default ModelList;

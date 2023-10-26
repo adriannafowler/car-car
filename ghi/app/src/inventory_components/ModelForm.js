@@ -115,6 +115,6 @@ function ModelForm() {
         </div>
         </div>
     );
-    }
+}
 
 export default ModelForm;
