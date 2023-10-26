@@ -7,11 +7,12 @@ import SalesList from './components/SalesList';
 import SalespersonForm from './components/SalespersonForm';
 import CustomerForm from './components/CustomerForm';
 import SaleForm from './components/SaleForm';
-import TechnicianForm from './TechnicianForm';
-import TechnicianList from './TechnicianList';
-import ServiceAppointmentForm from './ServiceAppointmentForm';
-import ServiceHistory from './ServiceHistory';
-import ServiceAppointments from './ServiceAppointments';
+import TechnicianForm from './Service Components/TechnicianForm';
+import TechnicianList from './Service Components/TechnicianList';
+import ServiceAppointmentForm from './Service Components/ServiceAppointmentForm';
+import ServiceHistory from './Service Components/ServiceHistory';
+import ServiceAppointments from './Service Components/ServiceAppointments';
+import AutomobileList from './AutomobileList';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
           <Route path="/appointments" element={<ServiceAppointments />} />
           <Route path="/appointments/create" element={<ServiceAppointmentForm />} />
           <Route path="/servicehistory" element={<ServiceHistory />} />
+          <Route path="/automobiles" element={<AutomobileList />} />
         </Routes>
 
       </div>
