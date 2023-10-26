@@ -14,6 +14,7 @@ import ServiceHistory from './Service Components/ServiceHistory';
 import ServiceAppointments from './Service Components/ServiceAppointments';
 import AutomobileList from './AutomobileList';
 import AutomobileForm from './AutomobileForm';
+import ManufacturerList from './ManufacturerList';
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
           <Route path="/servicehistory" element={<ServiceHistory />} />
           <Route path="/automobiles" element={<AutomobileList />} />
           <Route path="/automobiles/create" element={<AutomobileForm />} />
+          <Route path="/manufacturers" element={<ManufacturerList />} />
         </Routes>
 
       </div>
