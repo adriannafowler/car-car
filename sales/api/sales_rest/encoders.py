@@ -40,6 +40,8 @@ class SaleEncoder(ModelEncoder):
         "customer",
         "id",
     ]
-    encoders = {"automobile": AutomobileVOEncoder(),
-                "salesperson": SalespersonEncoder(),
-                "customer": CustomerEncoder()}
+    encoders = {
+        "automobile": AutomobileVOEncoder(),
+        "salesperson": SalespersonEncoder(),
+        "customer": CustomerEncoder(),
+    }

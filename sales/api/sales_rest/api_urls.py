@@ -1,7 +1,12 @@
 from django.urls import path
 
 from .views import (
-    api_list_salespeople, api_list_customers, api_list_sales, api_show_salesperson, api_show_customer, api_show_sale
+    api_list_salespeople,
+    api_list_customers,
+    api_list_sales,
+    api_show_salesperson,
+    api_show_customer,
+    api_show_sale,
 )
 
 urlpatterns = [

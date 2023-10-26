@@ -1,10 +1,12 @@
-from re import T
-from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 import json
 
-from .encoders import AutomobileVOEncoder, SalespersonEncoder, CustomerEncoder, SaleEncoder
+from .encoders import (
+    SalespersonEncoder,
+    CustomerEncoder,
+    SaleEncoder,
+)
 from .models import AutomobileVO, Salesperson, Customer, Sale
 
 
@@ -38,9 +40,9 @@ def api_show_salesperson(request, pk):
             )
     except Salesperson.DoesNotExist:
         return JsonResponse(
-                {"message": "Salesperson id does not exist"},
-                status=404
-            )
+            {"message": "Salesperson id does not exist"},
+            status=404
+        )
     else:
         try:
             salesperson = Salesperson.objects.get(id=pk)
@@ -49,8 +51,7 @@ def api_show_salesperson(request, pk):
 
         except Salesperson.DoesNotExist:
             return JsonResponse(
-                {"message": "Salesperson id does not exist"},
-                status=400
+                {"message": "Salesperson id does not exist"}, status=400
             )
 
 
@@ -84,8 +85,8 @@ def api_show_customer(request, pk):
             )
     except Customer.DoesNotExist:
         return JsonResponse(
-                {"message": "Customer id does not exist"},
-                status=404
+            {"message": "Customer id does not exist"},
+            status=404
             )
     else:
         try:
@@ -97,10 +98,7 @@ def api_show_customer(request, pk):
             return JsonResponse(
                 {"message": "Customer id does not exist"},
                 status=404
-            )
-
-
-
+                )
 
 
 @require_http_methods(["GET", "POST"])
@@ -115,23 +113,26 @@ def api_list_sales(request):
         content = json.loads(request.body)
         try:
             if "automobile" in content:
-                automobile = AutomobileVO.objects.get(vin=content["automobile"])
+                automobile = AutomobileVO.objects.get(
+                    vin=content["automobile"]
+                    )
                 content["automobile"] = automobile
         except AutomobileVO.DoesNotExist:
             return JsonResponse(
-                {"message": "Invalid automobile vin number"},
-                status=400
+                {"message": "Invalid automobile vin number"}, status=400
             )
 
         try:
             if "salesperson" in content:
-                salesperson = Salesperson.objects.get(employee_id=content["salesperson"])
+                salesperson = Salesperson.objects.get(
+                    employee_id=content["salesperson"]
+                )
                 content["salesperson"] = salesperson
         except Salesperson.DoesNotExist:
             return JsonResponse(
                 {"message": "Invalid employee ID number"},
                 status=400
-            )
+                )
 
         try:
             if "customer" in content:
@@ -141,14 +142,10 @@ def api_list_sales(request):
             return JsonResponse(
                 {"message": "Invalid customer ID number"},
                 status=400
-            )
+                )
 
         sale = Sale.objects.create(**content)
-        return JsonResponse(
-            sale,
-            encoder=SaleEncoder,
-            safe=False
-        )
+        return JsonResponse(sale, encoder=SaleEncoder, safe=False)
 
 
 @require_http_methods(["GET", "DELETE"])
@@ -160,13 +157,12 @@ def api_show_sale(request, pk):
                 sale,
                 encoder=SaleEncoder,
                 safe=False,
-
             )
         except Sale.DoesNotExist:
             return JsonResponse(
                 {"message": "Sale id does not exist"},
                 status=404
-            )
+                )
 
     else:
         try:
@@ -178,4 +174,4 @@ def api_show_sale(request, pk):
             return JsonResponse(
                 {"message": "Sale id does not exist"},
                 status=400
-            )
+                )
