@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('service_rest', '0001_initial'),
+        ("service_rest", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='status',
-            name='status',
-            field=models.CharField(default='SCHEDULED', max_length=100),
+            model_name="status",
+            name="status",
+            field=models.CharField(default="SCHEDULED", max_length=100),
         ),
     ]

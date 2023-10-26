@@ -1,8 +1,13 @@
-from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
-from .models import Technician, AutomobileVO, Status, Appointment
-from .encoders import TechnicianListEncoder, TechnicianDetailEncoder, Status, AppointmentListEncoder, AppointmentDetailEncoder, StatusEncoder
+from .models import Technician, Status, Appointment
+from .encoders import (
+    TechnicianListEncoder,
+    TechnicianDetailEncoder,
+    AppointmentListEncoder,
+    AppointmentDetailEncoder,
+    StatusEncoder,
+)
 import json
 
 
@@ -12,14 +17,13 @@ def appointment_list(request):
         try:
             appointments = Appointment.objects.all()
             return JsonResponse(
-                {"appointments": appointments},
-                encoder=AppointmentListEncoder
+                {"appointments": appointments}, encoder=AppointmentListEncoder
             )
         except Appointment.DoesNotExist:
             return JsonResponse(
                 {"message": "Failed to fetch appointments"},
-                status = 400
-            )
+                status=400
+                )
     else:
         content = json.loads(request.body)
         try:
@@ -28,7 +32,7 @@ def appointment_list(request):
         except Technician.DoesNotExist:
             return JsonResponse(
                 {"message": "Invalid technician id"},
-                status = 400,
+                status=400,
             )
         try:
             status_value = content.get("status", "scheduled")
@@ -36,15 +40,15 @@ def appointment_list(request):
         except Status.DoesNotExist:
             return JsonResponse(
                 {"message": "Invalid status"},
-                status = 400,
+                status=400,
             )
         appointment = Appointment.objects.create(
-            date_time = content["date_time"],
-            reason = content["reason"],
-            vin = content["vin"],
-            customer = content["customer"],
-            status = status,
-            technician = technician
+            date_time=content["date_time"],
+            reason=content["reason"],
+            vin=content["vin"],
+            customer=content["customer"],
+            status=status,
+            technician=technician,
         )
         return JsonResponse(
             appointment,
@@ -65,8 +69,8 @@ def appointment_detail(request, id):
         except Appointment.DoesNotExist:
             return JsonResponse(
                 {"message": "Invalid appointment id"},
-                status = 400
-            )
+                status=400
+                )
     elif request.method == "DELETE":
         try:
             count, _ = Appointment.objects.get(id=id).delete()
@@ -76,7 +80,7 @@ def appointment_detail(request, id):
             return JsonResponse(
                 {"message": "Invalid appointment id"},
                 status=400
-            )
+                )
     else:
         content = json.loads(request.body)
         try:
@@ -85,7 +89,7 @@ def appointment_detail(request, id):
         except Status.DoesNotExist:
             return JsonResponse(
                 {"message": "Invalid status"},
-                status = 400,
+                status=400,
             )
         if "technician" in content:
             try:
@@ -94,7 +98,7 @@ def appointment_detail(request, id):
             except Technician.DoesNotExist:
                 return JsonResponse(
                     {"message": "Invalid technician id"},
-                    status = 400,
+                    status=400,
                 )
         else:
             pass
@@ -102,72 +106,66 @@ def appointment_detail(request, id):
             appointment = Appointment.objects.filter(id=id).update(**content)
             appointment = Appointment.objects.get(id=id)
             return JsonResponse(
-                appointment,
-                encoder=AppointmentDetailEncoder,
-                safe=False
+                appointment, encoder=AppointmentDetailEncoder, safe=False
             )
         except Appointment.DoesNotExist:
             return JsonResponse(
                 {"message": "Invalid appointment id"},
-                status = 400
-            )
+                status=400
+                )
 
 
 @require_http_methods(["PUT"])
 def appointment_cancel(request, id):
-        content = json.loads(request.body) if request.body else {}
-        if "technician" not in content:
-            pass
-        try:
-            status_value = content.get("status", "canceled")
-            status, created = Status.objects.get_or_create(status=status_value)
-            content["status"] = status
-        except Status.DoesNotExist:
-            return JsonResponse(
-                {"message": "Invalid status"},
-                status = 400,
+    content = json.loads(request.body) if request.body else {}
+    if "technician" not in content:
+        pass
+    try:
+        status_value = content.get("status", "canceled")
+        status, created = Status.objects.get_or_create(status=status_value)
+        content["status"] = status
+    except Status.DoesNotExist:
+        return JsonResponse(
+            {"message": "Invalid status"},
+            status=400,
+        )
+    try:
+        Appointment.objects.filter(id=id).update(**content)
+        appointment = Appointment.objects.get(id=id)
+        return JsonResponse(
+            appointment,
+            encoder=AppointmentDetailEncoder,
+            safe=False
             )
-        try:
-            Appointment.objects.filter(id=id).update(**content)
-            appointment = Appointment.objects.get(id=id)
-            return JsonResponse(
-                appointment,
-                encoder=AppointmentDetailEncoder,
-                safe=False
-            )
-        except Appointment.DoesNotExist:
-            return JsonResponse(
-                {"message": "Invalid appointment id"},
-                status = 400
-            )
+    except Appointment.DoesNotExist:
+        return JsonResponse({"message": "Invalid appointment id"}, status=400)
 
 
 @require_http_methods(["PUT"])
 def appointment_finish(request, id):
-        content = json.loads(request.body) if request.body else {}
-        if "technician" not in content:
-            pass
-        try:
-            status_value = content.get("status", "finished")
-            status, created = Status.objects.get_or_create(status=status_value)
-            content["status"] = status
-        except Status.DoesNotExist:
-            return JsonResponse(
-                {"message": "Invalid status"},
-                status = 400,
-            )
-        try:
-            Appointment.objects.filter(id=id).update(**content)
-            appointment = Appointment.objects.get(id=id)
-            return JsonResponse(
-                appointment,
-                encoder=AppointmentDetailEncoder,
-                safe=False
-            )
-        except Appointment.DoesNotExist:
-            return JsonResponse(
-                {"message": "Invalid appointment id"},
-                status = 400
+    content = json.loads(request.body) if request.body else {}
+    if "technician" not in content:
+        pass
+    try:
+        status_value = content.get("status", "finished")
+        status, created = Status.objects.get_or_create(status=status_value)
+        content["status"] = status
+    except Status.DoesNotExist:
+        return JsonResponse(
+            {"message": "Invalid status"},
+            status=400,
+        )
+    try:
+        Appointment.objects.filter(id=id).update(**content)
+        appointment = Appointment.objects.get(id=id)
+        return JsonResponse(
+            appointment,
+            encoder=AppointmentDetailEncoder,
+            safe=False)
+    except Appointment.DoesNotExist:
+        return JsonResponse(
+            {"message": "Invalid appointment id"},
+            status=400
             )
 
 
@@ -177,22 +175,20 @@ def technician_list(request):
         try:
             technicians = Technician.objects.all()
             return JsonResponse(
-                {"technicians": technicians},
-                encoder=TechnicianListEncoder
+                {"technicians": technicians}, encoder=TechnicianListEncoder
             )
         except Technician.DoesNotExist:
             return JsonResponse(
                 {"message": "Failed to fetch technicians"},
-                status = 400
-            )
+                status=400
+                )
     else:
         content = json.loads(request.body)
         technician = Technician.objects.create(**content)
         return JsonResponse(
             technician,
             encoder=TechnicianListEncoder,
-            safe=False
-        )
+            safe=False)
 
 
 @require_http_methods(["GET", "DELETE"])
@@ -201,14 +197,13 @@ def technician_detail(request, id):
         try:
             technician = Technician.objects.get(id=id)
             return JsonResponse(
-                {"technician": technician},
-                encoder=TechnicianDetailEncoder
+                {"technician": technician}, encoder=TechnicianDetailEncoder
             )
         except Technician.DoesNotExist:
             return JsonResponse(
                 {"message": "Invalid technician id"},
-                status = 404
-            )
+                status=404
+                )
     else:
         try:
             count, _ = Technician.objects.get(id=id).delete()
@@ -217,20 +212,16 @@ def technician_detail(request, id):
         except Technician.DoesNotExist:
             return JsonResponse(
                 {"message": "Invalid technician id"},
-                status = 404
-            )
+                status=404
+                )
 
 
 @require_http_methods(["GET"])
 def statuses_list(request):
     try:
         statuses = Status.objects.all()
-        return JsonResponse(
-            {"statuses": statuses},
-            encoder=StatusEncoder
-        )
+        return JsonResponse({"statuses": statuses}, encoder=StatusEncoder)
     except Status.DoesNotExist:
         return JsonResponse(
             {"message": "Failed to fetch statuses"},
-            status=400
-        )
+            status=400)
