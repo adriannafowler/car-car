@@ -15,7 +15,6 @@ function SalespersonHistoryList() {
             let filteredData = data.sales.filter(function (el) {
                 return el.salesperson.employee_id === selectedSalesperson
             })
-            console.log(filteredData)
             setSales(filteredData)
         }
     }
