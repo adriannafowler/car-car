@@ -1,15 +1,18 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MainPage from './MainPage';
 import Nav from './Nav';
-import SalespeopleList from './components/SalespeopleList';
-import CustomerList from './components/CustomerList';
-import SalesList from './components/SalesList';
-import SalespersonForm from './components/SalespersonForm';
-import CustomerForm from './components/CustomerForm';
-import SaleForm from './components/SaleForm';
+import SalespeopleList from './sales_components/SalespeopleList';
+import CustomerList from './sales_components/CustomerList';
+import SalesList from './sales_components/SalesList';
+import SalespersonForm from './sales_components/SalespersonForm';
+import CustomerForm from './sales_components/CustomerForm';
+import SaleForm from './sales_components/SaleForm';
 import TechnicianForm from './TechnicianForm';
 import TechnicianList from './TechnicianList';
-import SalespersonHistoryList from './components/SalespersonHistoryList';
+import SalespersonHistoryList from './sales_components/SalespersonHistoryList';
+import ModelList from './inventory_components/ModelList';
+import ModelForm from './inventory_components/ModelForm';
+import ManufacturerForm from './inventory_components/ManufacturerForm';
 
 function App() {
   return (
@@ -33,8 +36,14 @@ function App() {
           </Route>
           <Route path="/technicians" element={<TechnicianList />} />
           <Route path="/technicians/create" element={<TechnicianForm />} />
+          <Route path="models">
+            <Route index element={<ModelList />} />
+            <Route path="create" element={<ModelForm />} />
+          </Route>
+          <Route path="manufacturers">
+            <Route path="create" element={<ManufacturerForm />} />
+          </Route>
         </Routes>
-
       </div>
     </BrowserRouter>
   );

@@ -10,6 +10,9 @@ function Nav() {
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+            <NavLink className="navbar-brand" to="manufacturers/create/" aria-current="page">Create a Manufacturer</NavLink>
+            <NavLink className="navbar-brand" to="models/" aria-current="page">Models</NavLink>
+            <NavLink className="navbar-brand" to="models/create/" aria-current="page">Create a Model</NavLink>
             <NavLink className="navbar-brand" to="salespeople/" aria-current="page">Salespeople</NavLink>
             <NavLink className="navbar-brand" to="salespeople/create/" aria-current="page">Add a Salesperson</NavLink>
             <NavLink className="navbar-brand" to="customers/" aria-current="page">Customers</NavLink>
