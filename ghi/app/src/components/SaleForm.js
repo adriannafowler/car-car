@@ -19,7 +19,10 @@ function SaleForm() {
 
         if (response.ok) {
             const data = await response.json()
-            setAutomobiles(data.autos)
+            let filteredData = data.autos.filter(function (el) {
+                return el.sold === false
+            })
+            setAutomobiles(filteredData)
         }
     }
 
@@ -67,16 +70,29 @@ function SaleForm() {
                 'Content-Type': 'application/json',
             }
         }
-
         const response = await fetch(saleUrl, fetchConfig)
 
         if (response.ok) {
-            setFormData({
-                automobile: '',
-                salesperson: '',
-                customer: '',
-                price: '',
-            })
+            const automobileUrl = `http://localhost:8100/api/automobiles/${formData.automobile}/`
+
+            const automobileFetchConfig = {
+                method: "PUT",
+                body: '{"sold": true}',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            }
+
+            const automobileResponse = await fetch(automobileUrl, automobileFetchConfig)
+
+            if (automobileResponse.ok) {
+                setFormData({
+                    automobile: '',
+                    salesperson: '',
+                    customer: '',
+                    price: '',
+                })
+            }
         }
     }
 
@@ -98,7 +114,7 @@ function SaleForm() {
                         <h1>Record a new sale</h1>
                         <form onSubmit={handleSubmit} id="add-sale">
                             <div className="mb-3">
-                                <select value={formData.automobile_vin} onChange={handleFormChange} required id="automobile" name="automobile" className="form-select">
+                                <select value={formData.automobile} onChange={handleFormChange} required id="automobile" name="automobile" className="form-select">
                                     <option value="automobile">Choose an automobile VIN</option>
                                     {automobiles.map(auto => {
                                         return (
