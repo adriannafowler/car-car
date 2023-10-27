@@ -29,5 +29,16 @@ Extras:
 
 ## Sales microservice
 
-Explain your models and integration with the inventory
-microservice, here.
+Models:
+
+AutomobileVO - this a value object that is pulling the vin number and sold status information from the Automobile model in Inventory.
+
+Salesperson - this model is to handle the sales staff. The information that it stores is their first name, last name, employee number, and a profile picture.
+
+Customer - this model handles the customers involved in the sale of the automobiles. The information that it stores is their first name, last name, address, and phone number.
+
+Sale - this model handles the sale of the Automobiles. It references the AutomobileVO which is pulling information from the Automobile model in Inventory. It also records the price of the sale and references the Customer and Salesperson models for the customer and salesperson associated with the sale. When a sale is filled out in the frontend in SaleForm.js, a PUT request is sent to the Automobile model in Inventory to update its sold status to True. This vehicle is then filtered out of the list of automobiles for the sale form.
+
+Extras:
+-Added a URLField to capture a picture url in order to add a profile picture for each salesperson.
+-Updated the salesperson page using bootstrap to make the page more visually appealing. Utilize rows, columns, and cards from bootstrap.
