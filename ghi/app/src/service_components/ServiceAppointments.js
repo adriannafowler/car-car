@@ -107,7 +107,6 @@ import {
     appointments.sort(function (a, b) {
         return new Date(a.date_time) - new Date(b.date_time);
     });
-    console.log(statuses)
     return (
         <>
         <h1>Service Appointments</h1>
