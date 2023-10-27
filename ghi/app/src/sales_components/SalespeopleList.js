@@ -25,7 +25,7 @@ function SalespeopleList() {
                 return (
                 <div key={salesperson.id} className="col-3">
                     <div className="card mb-5 shadow">
-                    <img src={salesperson.picture_url} class="card-img-top" />
+                    <img src={salesperson.picture_url} className="card-img-top" />
                     <div className="card-body">
                         <h5 className="card-title">
                         {salesperson.first_name} {salesperson.last_name}
