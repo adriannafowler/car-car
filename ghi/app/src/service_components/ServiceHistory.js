@@ -50,6 +50,10 @@ function ServiceHistory() {
         }
     };
 
+    appointments.sort(function (a, b) {
+        return new Date(a.date_time) - new Date(b.date_time);
+    });
+
     return (
         <>
         <h1>Service History</h1>
