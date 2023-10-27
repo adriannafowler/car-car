@@ -13,9 +13,10 @@ class Salesperson(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     employee_id = models.CharField(max_length=100, null=True, unique=True)
+    picture = models.ImageField(null=True, blank=True, upload_to="images/")
 
     def __str__(self):
-        return self.last_name
+        return self.employee_id
 
 
 class Customer(models.Model):

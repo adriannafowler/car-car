@@ -1,4 +1,6 @@
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 
 from .views import (
     api_list_salespeople,
@@ -16,4 +18,4 @@ urlpatterns = [
     path("customers/<int:pk>/", api_show_customer, name="api_show_customer"),
     path("sales/", api_list_sales, name="api_list_sales"),
     path("sales/<int:pk>/", api_show_sale, name="api_show_sale"),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
