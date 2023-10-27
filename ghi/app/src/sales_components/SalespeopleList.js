@@ -25,6 +25,7 @@ function SalespeopleList() {
                 <th>Employee ID</th>
                 <th>First Name</th>
                 <th>Last Name</th>
+                <th>Profile Picture</th>
             </tr>
             </thead>
             <tbody>
@@ -34,6 +35,9 @@ function SalespeopleList() {
                     <td>{salesperson.employee_id}</td>
                     <td>{salesperson.first_name}</td>
                     <td>{salesperson.last_name}</td>
+                    <td>
+                    <img src={salesperson.picture_url} height="150" />
+                    </td>
                 </tr>
                 );
             })}

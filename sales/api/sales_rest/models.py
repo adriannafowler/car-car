@@ -13,6 +13,7 @@ class Salesperson(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     employee_id = models.CharField(max_length=100, null=True, unique=True)
+    picture_url = models.URLField(null=True, blank=True)
 
     def __str__(self):
         return self.last_name
