@@ -2,12 +2,12 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainPage from "./MainPage";
 import Nav from "./Nav";
 
-import SalespeopleList from "./sales_components/SalespeopleList";
 import CustomerList from "./sales_components/CustomerList";
-import SalesList from "./sales_components/SalesList";
-import SalespersonForm from "./sales_components/SalespersonForm";
 import CustomerForm from "./sales_components/CustomerForm";
+import SalesList from "./sales_components/SalesList";
 import SaleForm from "./sales_components/SaleForm";
+import SalespeopleList from "./sales_components/SalespeopleList";
+import SalespersonForm from "./sales_components/SalespersonForm";
 import SalespersonHistoryList from "./sales_components/SalespersonHistoryList";
 
 import TechnicianList from "./service_components/TechnicianList";
