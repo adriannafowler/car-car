@@ -143,7 +143,7 @@ import {
                     <td>{appointment.reason}</td>
                     <td>
                     <button
-                        className="btn btn-light"
+                        className="btn btn-outline-success"
                         onClick={() => specialClick(appointment.id)}
                     >
                         {appointment.status}
