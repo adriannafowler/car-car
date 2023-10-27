@@ -35,8 +35,20 @@ def appointment_list(request):
                 status=400,
             )
         try:
+            status_value = content.get("status", "arrived")
+            status, _ = Status.objects.get_or_create(status=status_value)
+
+            status_value = content.get("status", "in progress")
+            status, _ = Status.objects.get_or_create(status=status_value)
+
+            status_value = content.get("status", "finished")
+            status, _ = Status.objects.get_or_create(status=status_value)
+
+            status_value = content.get("status", "canceled")
+            status, _ = Status.objects.get_or_create(status=status_value)
+
             status_value = content.get("status", "scheduled")
-            status, created = Status.objects.get_or_create(status=status_value)
+            status, _ = Status.objects.get_or_create(status=status_value)
         except Status.DoesNotExist:
             return JsonResponse(
                 {"message": "Invalid status"},
@@ -100,8 +112,6 @@ def appointment_detail(request, id):
                     {"message": "Invalid technician id"},
                     status=400,
                 )
-        else:
-            pass
         try:
             appointment = Appointment.objects.filter(id=id).update(**content)
             appointment = Appointment.objects.get(id=id)
@@ -122,7 +132,7 @@ def appointment_cancel(request, id):
         pass
     try:
         status_value = content.get("status", "canceled")
-        status, created = Status.objects.get_or_create(status=status_value)
+        status, _ = Status.objects.get_or_create(status=status_value)
         content["status"] = status
     except Status.DoesNotExist:
         return JsonResponse(

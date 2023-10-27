@@ -107,7 +107,7 @@ import {
     appointments.sort(function (a, b) {
         return new Date(a.date_time) - new Date(b.date_time);
     });
-
+    console.log(statuses)
     return (
         <>
         <h1>Service Appointments</h1>
@@ -132,25 +132,28 @@ import {
                 if (vipVins.includes(appointment.vin)) {
                 vip = "Yes";
                 }
-                return (
-                <tr key={appointment.id} id={appointment.status}>
-                    <td>{appointment.customer}</td>
-                    <td>{vip}</td>
-                    <td>{appointment.vin}</td>
-                    <td>{date}</td>
-                    <td>{time}</td>
-                    <td>{appointment.technician}</td>
-                    <td>{appointment.reason}</td>
-                    <td>
-                    <button
-                        className="btn btn-outline-success"
-                        onClick={() => specialClick(appointment.id)}
-                    >
-                        {appointment.status}
-                    </button>
-                    </td>
-                </tr>
-                );
+                if (appointment.status === "finished" || appointment.status === "canceled") {
+                    return null
+                } else
+                    return (
+                    <tr key={appointment.id} id={appointment.status}>
+                        <td>{appointment.customer}</td>
+                        <td>{vip}</td>
+                        <td>{appointment.vin}</td>
+                        <td>{date}</td>
+                        <td>{time}</td>
+                        <td>{appointment.technician}</td>
+                        <td>{appointment.reason}</td>
+                        <td>
+                        <button
+                            className="btn btn-outline-success"
+                            onClick={() => specialClick(appointment.id)}
+                        >
+                            {appointment.status}
+                        </button>
+                        </td>
+                    </tr>
+                    );
             })}
             </tbody>
         </table>

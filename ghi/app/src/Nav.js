@@ -73,7 +73,7 @@ function Nav() {
                     className="nav-link bg-success"
                     to="/automobiles/create/"
                   >
-                    Add an automobile
+                    Add an Automobile
                   </NavLink>
                 </li>
               </ul>
@@ -102,7 +102,7 @@ function Nav() {
                     className="nav-link bg-success"
                     to="/technicians/create/"
                   >
-                    Add a technician
+                    Add a Technician
                   </NavLink>
                 </li>
                 <li>

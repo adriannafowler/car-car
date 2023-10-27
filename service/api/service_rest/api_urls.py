@@ -15,11 +15,7 @@ urlpatterns = [
     path("appointments/<int:id>/", appointment_detail, name="appointment_detail"),
     path("technicians/", technician_list, name="technician_list"),
     path("technicians/<int:id>/", technician_detail, name="technician_detail"),
-    path(
-        "appointments/<int:id>/cancel/", appointment_cancel, name="appointment_cancel"
-    ),
-    path(
-        "appointments/<int:id>/finish/", appointment_finish, name="appointment_finish"
-    ),
+    path("appointments/<int:id>/cancel/", appointment_cancel, name="appointment_cancel"),
+    path("appointments/<int:id>/finish/", appointment_finish, name="appointment_finish"),
     path("statuses/", statuses_list, name="statuses_list"),
 ]

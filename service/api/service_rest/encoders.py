@@ -21,14 +21,6 @@ class TechnicianDetailEncoder(ModelEncoder):
     ]
 
 
-class AutomobileVOEncoder(ModelEncoder):
-    model = AutomobileVO
-    properties = [
-        "vin",
-        "sold",
-    ]
-
-
 class StatusEncoder(ModelEncoder):
     model = Status
     properties = [
