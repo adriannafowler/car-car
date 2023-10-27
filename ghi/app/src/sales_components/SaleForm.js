@@ -27,7 +27,7 @@ function SaleForm() {
 
     useEffect(() => {
         getAutomobileData();
-    }, []);
+    }, [automobiles]);
 
     const getSalespersonData = async () => {
         const url = "http://localhost:8090/api/salespeople/";

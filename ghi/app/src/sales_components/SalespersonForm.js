@@ -5,6 +5,7 @@ function SalespersonForm() {
         first_name: "",
         last_name: "",
         employee_id: "",
+        picture_url: "",
     });
 
     const handleSubmit = async (event) => {
@@ -27,6 +28,7 @@ function SalespersonForm() {
             first_name: "",
             last_name: "",
             employee_id: "",
+            picture_url: "",
         });
         }
     };
@@ -84,6 +86,18 @@ function SalespersonForm() {
                     className="form-control"
                     />
                     <label htmlFor="employee_id">Employee ID</label>
+                </div>
+                <div className="form-floating mb-3">
+                    <input
+                    value={formData.picture_url}
+                    onChange={handleFormChange}
+                    placeholder="Picture Url"
+                    type="url"
+                    name="picture_url"
+                    id="picture_url"
+                    className="form-control"
+                    />
+                    <label htmlFor="picture_url">Picture URL</label>
                 </div>
                 <button className="btn btn-primary">Create</button>
                 </form>

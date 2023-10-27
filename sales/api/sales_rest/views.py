@@ -18,6 +18,7 @@ def api_list_salespeople(request):
             {"salespeople": salespeople},
             encoder=SalespersonEncoder,
         )
+
     else:
         content = json.loads(request.body)
         salesperson = Salesperson.objects.create(**content)
