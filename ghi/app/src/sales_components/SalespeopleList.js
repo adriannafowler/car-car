@@ -18,31 +18,28 @@ function SalespeopleList() {
 
     return (
         <div className="container">
-        <h1>Salespeople</h1>
-        <table className="table table-striped">
-            <thead>
-            <tr>
-                <th>Employee ID</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Profile Picture</th>
-            </tr>
-            </thead>
-            <tbody>
+        <h1 className="p-3">Salespeople</h1>
+        <div className="container">
+            <div className="row">
             {salespeople?.map((salesperson) => {
                 return (
-                <tr key={salesperson.id}>
-                    <td>{salesperson.employee_id}</td>
-                    <td>{salesperson.first_name}</td>
-                    <td>{salesperson.last_name}</td>
-                    <td>
-                    <img src={salesperson.picture_url} height="150" />
-                    </td>
-                </tr>
+                <div key={salesperson.id} className="col-3">
+                    <div className="card mb-5 shadow">
+                    <img src={salesperson.picture_url} class="card-img-top" />
+                    <div className="card-body">
+                        <h5 className="card-title">
+                        {salesperson.first_name} {salesperson.last_name}
+                        </h5>
+                        <h6 className="card-subtitle mb-2 text-muted">
+                        Employee ID: {salesperson.employee_id}
+                        </h6>
+                    </div>
+                    </div>
+                </div>
                 );
             })}
-            </tbody>
-        </table>
+            </div>
+        </div>
         </div>
     );
     }
